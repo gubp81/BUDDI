@@ -1,29 +1,26 @@
-Concordia University - SOEN6471:
-Project for Refactoring: Buddi - Personal Budget System
+<b>Concordia University - SOEN6471
+<p>Project for Refactoring: Buddi - Personal Budget System
 
-Team Members:
-Amer Al-Mahdawi 
-Khalid Altoum 
-Gustavo Barbieri Pereira 
-Nikita Parashar 
-Vishnu Vardhan Rajmohan 
+<b>Team Members:
+<p>Amer Al-Mahdawi;
+Khalid Altoum;
+Gustavo Barbieri Pereira;
+Nikita Parashar;
+Vishnu Vardhan Rajmohan.
 
-Project Description:
-Buddi is a software developed for managing personal finance and budgeting. The goal of this application is to help people with little or no financial background. It can be run on almost any platform (Windows, Mac OS X, Linux, and many other operating system) which has java virtual machine installed (Java 1.6 or higher). It can be translated to any languages easily by using its own language editor which allows anyone to edit the translation of the program itself.
-Buddi is an open source software developed by Wyatt Olson, released under GNU General Public Licenses, that allows anyone to access, modify, and add/remove features to the source code preferably. Its first release (version 0.9 Beta Release) was in May 2006 and its most current stable release is Buddi-3.4.1.11 which was released in August 2013.
-In 2011 Buddi was the winner of About.com Personal Finance Software (Mac) Award, and also it has been nominated for the About.com Reader's Choice Awards.
-There are thousands of similar softwares in the market, and most of them are expensive and difficult to understand and maintain. There are some free good tools, as Mint[4], AceMoney[1], MoneyDance[5],YNAB[7] that are listed on a Forbes research about Budgeting Software Options[3], but none of them is an extensible open source project.
-All of the above inspires us to choose this software as a part of our project to fulfill the requirements of SOEN 6471/Advanced Software Architecture course.
 
-************************************************************************************************************
+<b>Project Description:
+<p>Buddi is a software developed for managing personal finance and budgeting. The goal of this application is to help people with little or no financial background. It can be run on almost any platform (Windows, Mac OS X, Linux, and many other operating system) which has java virtual machine installed (Java 1.6 or higher). It can be translated to any languages easily by using its own language editor which allows anyone to edit the translation of the program itself.
+<p>Buddi is an open source software developed by Wyatt Olson, released under GNU General Public Licenses, that allows anyone to access, modify, and add/remove features to the source code preferably. Its first release (version 0.9 Beta Release) was in May 2006 and its most current stable release is Buddi-3.4.1.11 which was released in August 2013.
+<p>In 2011 Buddi was the winner of About.com Personal Finance Software (Mac) Award, and also it has been nominated for the About.com Reader's Choice Awards.
+<p>There are thousands of similar softwares in the market, and most of them are expensive and difficult to understand and maintain. There are some free good tools, as Mint[4], AceMoney[1], MoneyDance[5],YNAB[7] that are listed on a Forbes research about Budgeting Software Options[3], but none of them is an extensible open source project.
+<p>All of the above inspires us to choose this software as a part of our project to fulfill the requirements of SOEN 6471/Advanced Software Architecture course.
 
 BUDDI BY Wyatt Olson:
 ----------------------------------------
-Buddi - Personal budget software for the rest of us
-Copyright (C) 2006, 2007 Wyatt Olson
-This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+<p>Buddi - Personal budget software for the rest of us
+<p>Copyright (C) 2006, 2007 Wyatt Olson
+<p>This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ----------------------------------------
 
 Introduction
