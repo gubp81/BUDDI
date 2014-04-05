@@ -86,9 +86,19 @@ public class AccountImpl extends SourceImpl implements Account {
 	public void updateBalance(){		
 		if (getDocument() == null)			
 			return;
-		long balance = this.getStartingBalance();
+//		long balance = this.getStartingBalance();
 
 		List<Transaction> transactions = getDocument().getTransactions(this);
+		
+		
+		updateTheBalance(transactions);
+		
+/*		
+		
+		
+		long balance = this.getStartingBalance();
+		
+		
 
 		for (Transaction transaction : transactions) {			
 			try {
@@ -120,7 +130,79 @@ public class AccountImpl extends SourceImpl implements Account {
 			}		
 		}
 		setBalance(balance);	
+		
+		
+*/
 	}
+	
+	
+	
+/////////////////////////////////////////////////////////////////////
+	
+	
+	public void updateTheBalance(List<Transaction> transactions) {
+	
+		
+		long balance = this.getStartingBalance();
+		
+		
+
+		for (Transaction transaction : transactions) {			
+			try {
+				
+				
+				
+				
+				
+				if (!transaction.isDeleted()){
+				
+					
+					
+					
+					
+					
+					
+					//We are moving money *to* this account					
+					if (transaction.getTo().equals(this)){
+						balance += transaction.getAmount();						
+						transaction.setBalance(this.getUid(), balance);
+					} 					
+					//We are moving money *from* this account					
+					else if (transaction.getFrom().equals(this)){
+						balance -= transaction.getAmount();						
+						transaction.setBalance(this.getUid(), balance);					
+					}					
+					//We are moving money *to* this account					
+					for (TransactionSplit split : transaction.getToSplits()) {
+						if(split.getSource().equals(this))							
+							balance += split.getAmount();					
+					}					
+					//We are moving money *from* this account					
+					for (TransactionSplit split : transaction.getFromSplits()) {
+						if(split.getSource().equals(this))							
+							balance -= split.getAmount();					
+					}				
+				}			
+			}			
+			catch (InvalidValueException ive){				
+				Logger.getLogger(AccountImpl.class.getName()).log(Level.WARNING, "Incorrect value", ive);			
+			}		
+		}
+		setBalance(balance);
+	}
+	
+	
+	
+	
+////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public String getFullName() {
 		return this.getName() + " (" + getAccountType().getName() + ")";
