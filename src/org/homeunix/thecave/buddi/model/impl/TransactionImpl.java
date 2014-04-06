@@ -365,12 +365,16 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			//We are moving money *to* this account					
 			balance = updateBalanceFromDestinationAccount(balance, account);					
 			//We are moving money *from* this account					
-			for (TransactionSplit split : getFromSplits()) {
-				if(split.getSource().equals(account))							
-					balance -= split.getAmount();					
-			}				
+			balance = updateBalanceFromSourceAccount(balance, account);				
 		}			
 		
+		return balance;
+	}
+	private long updateBalanceFromSourceAccount(long balance, Account account) {
+		for (TransactionSplit split : getFromSplits()) {
+			if(split.getSource().equals(account))							
+				balance -= split.getAmount();					
+		}
 		return balance;
 	}
 	private long updateBalanceFromDestinationAccount(long balance,
