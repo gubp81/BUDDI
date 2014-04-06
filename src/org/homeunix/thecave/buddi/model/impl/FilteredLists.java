@@ -313,89 +313,19 @@ public class FilteredLists {
 			if (null == getDateFilter() || TransactionDateFilterKeys.TRANSACTION_FILTER_ALL_DATES == getDateFilter()) {
 				return true;
 			}
-
 			
-			switch (getDateFilter()) {
 			
-			case TRANSACTION_FILTER_TODAY:
-				
-				return new Today().getDateTypeCode(t);
-				
-			//	return DateUtil.isSameDay(today, t.getDate());
+			DateType dateType = DateType.newType(getDateFilter());
 			
-			case TRANSACTION_FILTER_YESTERDAY:
-				
-				return new Yesterday().getDateTypeCode(t);
-				
-//				return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-				
-			case TRANSACTION_FILTER_THIS_WEEK:
-				
-				return new ThisWeek().getDateTypeCode(t);
-				
-			//	return DateUtil.isSameWeek(today, t.getDate());
 			
-			case TRANSACTION_FILTER_THIS_SEMI_MONTH:
-				
-				return new ThisSemiMonth().getDateTypeCode(t);
-				
-				
-//				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-//				return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-			
-			case TRANSACTION_FILTER_LAST_SEMI_MONTH:
-				
-				
-				return new LastSemiMonth().getDateTypeCode(t);
-				
-//				BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
-//				return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
-			
-			case TRANSACTION_FILTER_THIS_MONTH:
-				
-				return new ThisMonth().getDateTypeCode(t);
-				
-//				return DateUtil.isSameMonth(today, t.getDate());
-			
-			case TRANSACTION_FILTER_LAST_MONTH:
-				
-				return new LastMonth().getDateTypeCode(t);
-				
-//				return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
-			
-			case TRANSACTION_FILTER_THIS_QUARTER:
-				
-				return new ThisQuarter().getDateTypeCode(t);
-				
-//				return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
-			
-			case TRANSACTION_FILTER_LAST_QUARTER:
-				
-				return new LastQuarter().getDateTypeCode(t);
-				
-//				return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
-			
-			case TRANSACTION_FILTER_THIS_YEAR:
-				
-				return new ThisYear().getDateTypeCode(t);
-				
-//				return DateUtil.isSameYear(today, t.getDate());	
-			
-			case TRANSACTION_FILTER_LAST_YEAR:
-				
-				return new LastYear().getDateTypeCode(t);
-				
-//				return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-				
-			default:
+			if (dateType == null) {
 				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + getDateFilter());
 				return false;
-					
-				
+
 			}
 			
-			
-			
+			return dateType.getDateTypeCode(t);
+
 		}
 
 		private boolean acceptText(Transaction t) {
@@ -577,8 +507,65 @@ abstract class DateType {
 	
 	Date today = new Date();
 	
-	abstract boolean getDateTypeCode(Transaction t);		
+	abstract boolean getDateTypeCode(Transaction t);
+	
+	static DateType newType(TransactionDateFilterKeys dateFilter) {
+		
+		switch (dateFilter) {
+		
+		case TRANSACTION_FILTER_TODAY:
+			
+			return new Today();
+		
+		case TRANSACTION_FILTER_YESTERDAY:
+	
+			return new Yesterday();
+			
+		case TRANSACTION_FILTER_THIS_WEEK:
+			
+			return new ThisWeek();
+			
+		case TRANSACTION_FILTER_THIS_SEMI_MONTH:
+			
+			return new ThisSemiMonth();
+		
+		case TRANSACTION_FILTER_LAST_SEMI_MONTH:
+			
+			return new LastSemiMonth();
+		
+		case TRANSACTION_FILTER_THIS_MONTH:
+			
+			return new ThisMonth();
+		
+		case TRANSACTION_FILTER_LAST_MONTH:
+			
+			return new LastMonth();
+		
+		case TRANSACTION_FILTER_THIS_QUARTER:
+			
+			return new ThisQuarter();
+			
+		case TRANSACTION_FILTER_LAST_QUARTER:
+			
+			return new LastQuarter();
+		
+		case TRANSACTION_FILTER_THIS_YEAR:
+			
+			return new ThisYear();
+		
+		case TRANSACTION_FILTER_LAST_YEAR:
+			
+			return new LastYear();
+			
+		default:
+			return null;
+			
+		}
+	}
+		
 }
+	
+	
 
 class Today extends DateType {
 	boolean getDateTypeCode(Transaction t) {
