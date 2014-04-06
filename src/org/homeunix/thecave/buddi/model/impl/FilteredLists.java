@@ -303,15 +303,20 @@ public class FilteredLists {
 			//If in doubt, we return true.  Is this correct behaviour?
 			return true;
 		}
+		
+		
+		private TransactionDateFilterKeys getDateFilter() {
+			return dateFilter;
+		}
 
 		private boolean acceptDate(Transaction t) {
-			if (null == dateFilter || TransactionDateFilterKeys.TRANSACTION_FILTER_ALL_DATES == dateFilter) {
+			if (null == getDateFilter() || TransactionDateFilterKeys.TRANSACTION_FILTER_ALL_DATES == getDateFilter()) {
 				return true;
 			}
 
 			Date today = new Date();
 			
-			switch (dateFilter) {
+			switch (getDateFilter()) {
 			
 			case TRANSACTION_FILTER_TODAY:
 				return DateUtil.isSameDay(today, t.getDate());
@@ -349,7 +354,7 @@ public class FilteredLists {
 				return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
 				
 			default:
-				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + dateFilter);
+				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + getDateFilter());
 				return false;
 					
 				
