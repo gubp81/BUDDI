@@ -584,4 +584,13 @@ public class FilteredLists {
 			return false;
 		}
 	}
+	
+	
+	public static abstract class DateType {
+		abstract boolean getDateTypeCode();		
+	}
+	
+	
+	
+	
 }
