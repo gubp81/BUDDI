@@ -363,10 +363,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 //			else if (getFrom().equals(account)){
 			balance = updateSourceAccountBalance(balance, account);					
 			//We are moving money *to* this account					
-			for (TransactionSplit split : getToSplits()) {
-				if(split.getSource().equals(account))							
-					balance += split.getAmount();					
-			}					
+			balance = updateBalanceFromDestinationAccount(balance, account);					
 			//We are moving money *from* this account					
 			for (TransactionSplit split : getFromSplits()) {
 				if(split.getSource().equals(account))							
@@ -374,6 +371,14 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			}				
 		}			
 		
+		return balance;
+	}
+	private long updateBalanceFromDestinationAccount(long balance,
+			Account account) {
+		for (TransactionSplit split : getToSplits()) {
+			if(split.getSource().equals(account))							
+				balance += split.getAmount();					
+		}
 		return balance;
 	}
 	private long updateSourceAccountBalance(long balance, Account account) {
