@@ -314,34 +314,30 @@ public class FilteredLists {
 				return true;
 			}
 
-			Date today = new Date();
-			
-			DateType dateType;
-			
 			
 			switch (getDateFilter()) {
 			
 			case TRANSACTION_FILTER_TODAY:
 				
-				return new Today().getDateTypeCode(today, t);
+				return new Today().getDateTypeCode(t);
 				
 			//	return DateUtil.isSameDay(today, t.getDate());
 			
 			case TRANSACTION_FILTER_YESTERDAY:
 				
-				return new Yesterday().getDateTypeCode(today, t);
+				return new Yesterday().getDateTypeCode(t);
 				
 //				return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
 				
 			case TRANSACTION_FILTER_THIS_WEEK:
 				
-				return new ThisWeek().getDateTypeCode(today, t);
+				return new ThisWeek().getDateTypeCode(t);
 				
 			//	return DateUtil.isSameWeek(today, t.getDate());
 			
 			case TRANSACTION_FILTER_THIS_SEMI_MONTH:
 				
-				return new ThisSemiMonth().getDateTypeCode(today, t);
+				return new ThisSemiMonth().getDateTypeCode(t);
 				
 				
 //				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
@@ -350,44 +346,44 @@ public class FilteredLists {
 			case TRANSACTION_FILTER_LAST_SEMI_MONTH:
 				
 				
-				return new LastSemiMonth().getDateTypeCode(today, t);
+				return new LastSemiMonth().getDateTypeCode(t);
 				
 //				BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
 //				return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
 			
 			case TRANSACTION_FILTER_THIS_MONTH:
 				
-				return new ThisMonth().getDateTypeCode(today, t);
+				return new ThisMonth().getDateTypeCode(t);
 				
 //				return DateUtil.isSameMonth(today, t.getDate());
 			
 			case TRANSACTION_FILTER_LAST_MONTH:
 				
-				return new LastMonth().getDateTypeCode(today, t);
+				return new LastMonth().getDateTypeCode(t);
 				
 //				return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
 			
 			case TRANSACTION_FILTER_THIS_QUARTER:
 				
-				return new ThisQuarter().getDateTypeCode(today, t);
+				return new ThisQuarter().getDateTypeCode(t);
 				
 //				return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
 			
 			case TRANSACTION_FILTER_LAST_QUARTER:
 				
-				return new LastQuarter().getDateTypeCode(today, t);
+				return new LastQuarter().getDateTypeCode(t);
 				
 //				return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
 			
 			case TRANSACTION_FILTER_THIS_YEAR:
 				
-				return new ThisYear().getDateTypeCode(today, t);
+				return new ThisYear().getDateTypeCode(t);
 				
 //				return DateUtil.isSameYear(today, t.getDate());	
 			
 			case TRANSACTION_FILTER_LAST_YEAR:
 				
-				return new LastYear().getDateTypeCode(today, t);
+				return new LastYear().getDateTypeCode(t);
 				
 //				return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
 				
@@ -398,55 +394,6 @@ public class FilteredLists {
 				
 			}
 			
-			
-//////////////////////////		
-			/*
-
-			if (TransactionDateFilterKeys.TRANSACTION_FILTER_TODAY == dateFilter) {
-				return DateUtil.isSameDay(today, t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_YESTERDAY == dateFilter) {
-				return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_WEEK == dateFilter) {
-				return DateUtil.isSameWeek(today, t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_SEMI_MONTH == dateFilter) {
-				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-				return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_SEMI_MONTH == dateFilter) {
-				BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-				return (semiMonth.getStartOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_MONTH == dateFilter) {
-				return DateUtil.isSameMonth(today, t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_MONTH == dateFilter) {
-				return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_QUARTER == dateFilter) {
-				return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_QUARTER == dateFilter) {
-				return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_THIS_YEAR == dateFilter) {
-				return DateUtil.isSameYear(today, t.getDate());				
-			}
-			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_YEAR == dateFilter) {
-				return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-			}
-			else {
-				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + dateFilter);
-				return false;
-			}
-			
-	*/		
-			
-			
-			
-////////////////////////			
 			
 			
 		}
@@ -623,151 +570,20 @@ public class FilteredLists {
 		}
 	}
 	
-/*	
-	public abstract class DateType {
-		abstract boolean getDateTypeCode();		
-	}
-	
-	public class Today extends DateType {
-		boolean getDateTypeCode() {
-			return true;
-			//return DateUtil.isSameDay(today, t.getDate());
-		}
-	}
-	
-	public class Yesterday extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-			
-		}
-	}
-	
-	
-	
-	public class ThisWeek extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameWeek(today, t.getDate());
-			
-		}
-	}
-	public class ThisSemiMonth extends DateType {
-		boolean getDateTypeCode() {
-			BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-			return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-			
-		}
-	}
-	public class LastSemiMonth extends DateType {
-		boolean getDateTypeCode() {
-			BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
-			return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
-			
-		}
-	}
-	public class ThisMonth extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameMonth(today, t.getDate());
-			
-		}
-	}
-	public class LastMonth extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
-			
-		}
-	}
-	public class ThisQuarter extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
-			
-		}
-	}
-	public class LastQuarter extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
-			
-		}
-	}
-	public class ThisYear extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameYear(today, t.getDate());
-			
-		}
-	}
-	public class LastYear extends DateType {
-		boolean getDateTypeCode() {
-			return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-			
-		}
-	}
-
-	
-	
-	
-	//////////////////////////////////////
-/*	
-	switch (getDateFilter()) {
-	
-	case TRANSACTION_FILTER_TODAY:
-		return DateUtil.isSameDay(today, t.getDate());
-	
-	case TRANSACTION_FILTER_YESTERDAY:
-		return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-------------------------------------------------		
-	case TRANSACTION_FILTER_THIS_WEEK:
-		return DateUtil.isSameWeek(today, t.getDate());
--------------------------------------------------	
-	case TRANSACTION_FILTER_THIS_SEMI_MONTH:
-		BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-		return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-------------------------------------------------	
-	case TRANSACTION_FILTER_LAST_SEMI_MONTH:
-		BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
-		return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
-------------------------------------------	
-	case TRANSACTION_FILTER_THIS_MONTH:
-		return DateUtil.isSameMonth(today, t.getDate());
---------------------------------------	
-	case TRANSACTION_FILTER_LAST_MONTH:
-		return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
---------------------------------------	
-	case TRANSACTION_FILTER_THIS_QUARTER:
-		return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
---------------------------------------	
-	case TRANSACTION_FILTER_LAST_QUARTER:
-		return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
------------------------------------------	
-	case TRANSACTION_FILTER_THIS_YEAR:
-		return DateUtil.isSameYear(today, t.getDate());	
------------------------------------------	
-	case TRANSACTION_FILTER_LAST_YEAR:
-		return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-----------------------------------------		
-	default:
-		Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + getDateFilter());
-		return false;
-
-*/	
-	/////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
 
 
 abstract class DateType {
-	abstract boolean getDateTypeCode(Date today, Transaction t);		
+	
+	Date today = new Date();
+	
+	abstract boolean getDateTypeCode(Transaction t);		
 }
 
 class Today extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameDay(today, t.getDate());
+
 	}
 }
 
@@ -775,122 +591,70 @@ class Today extends DateType {
 
 
 class Yesterday extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-		
+	
 	}
 }
 
 
 
 class ThisWeek extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameWeek(today, t.getDate());
-		
+	
 	}
 }
 class ThisSemiMonth extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
 		return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-		
+	
 	}
 }
 class LastSemiMonth extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
 		return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
-		
+	
 	}
 }
 class ThisMonth extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameMonth(today, t.getDate());
-		
+	
 	}
 }
 class LastMonth extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
-		
+	
 	}
 }
 class ThisQuarter extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
-		
+	
 	}
 }
 class LastQuarter extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
-		
+	
 	}
 }
 class ThisYear extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameYear(today, t.getDate());
-		
+	
 	}
 }
 
 
 class LastYear extends DateType {
-	boolean getDateTypeCode(Date today, Transaction t) {
+	boolean getDateTypeCode(Transaction t) {
 		return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-		
+	
 	}
 }
-
-
-
-
-
-
-//////////////////////////////////////
-/*	
-switch (getDateFilter()) {
-
-case TRANSACTION_FILTER_TODAY:
-	return DateUtil.isSameDay(today, t.getDate());
-
-case TRANSACTION_FILTER_YESTERDAY:
-	return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
-------------------------------------------------		
-case TRANSACTION_FILTER_THIS_WEEK:
-	return DateUtil.isSameWeek(today, t.getDate());
--------------------------------------------------	
-case TRANSACTION_FILTER_THIS_SEMI_MONTH:
-	BudgetCategoryType semiMonth = new BudgetCategoryTypeSemiMonthly();
-	return (semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate())));
-------------------------------------------------	
-case TRANSACTION_FILTER_LAST_SEMI_MONTH:
-	BudgetCategoryType semiMonth1 = new BudgetCategoryTypeSemiMonthly();
-	return (semiMonth1.getStartOfBudgetPeriod(semiMonth1.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth1.getStartOfBudgetPeriod(t.getDate())));
-------------------------------------------	
-case TRANSACTION_FILTER_THIS_MONTH:
-	return DateUtil.isSameMonth(today, t.getDate());
---------------------------------------	
-case TRANSACTION_FILTER_LAST_MONTH:
-	return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
---------------------------------------	
-case TRANSACTION_FILTER_THIS_QUARTER:
-	return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
---------------------------------------	
-case TRANSACTION_FILTER_LAST_QUARTER:
-	return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
------------------------------------------	
-case TRANSACTION_FILTER_THIS_YEAR:
-	return DateUtil.isSameYear(today, t.getDate());	
------------------------------------------	
-case TRANSACTION_FILTER_LAST_YEAR:
-	return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
-----------------------------------------		
-default:
-	Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + getDateFilter());
-	return false;
-
-*/	
-/////////////////////////////////////
-
 
