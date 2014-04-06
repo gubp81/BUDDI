@@ -6,15 +6,12 @@ package org.homeunix.thecave.buddi.model.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.homeunix.thecave.buddi.model.Account;
 import org.homeunix.thecave.buddi.model.AccountType;
 import org.homeunix.thecave.buddi.model.Document;
 import org.homeunix.thecave.buddi.model.ModelObject;
 import org.homeunix.thecave.buddi.model.Transaction;
-import org.homeunix.thecave.buddi.model.TransactionSplit;
 import org.homeunix.thecave.buddi.plugin.api.exception.InvalidValueException;
 
 /**
@@ -83,127 +80,33 @@ public class AccountImpl extends SourceImpl implements Account {
 		//		}
 		super.setName(name);
 	}
+	
+	
 	public void updateBalance(){		
 		if (getDocument() == null)			
 			return;
-//		long balance = this.getStartingBalance();
 
 		List<Transaction> transactions = getDocument().getTransactions(this);
 		
 		
 		updateTheBalance(transactions);
 		
-/*		
-		
-		
-		long balance = this.getStartingBalance();
-		
-		
-
-		for (Transaction transaction : transactions) {			
-			try {
-				if (!transaction.isDeleted()){					
-					//We are moving money *to* this account					
-					if (transaction.getTo().equals(this)){
-						balance += transaction.getAmount();						
-						transaction.setBalance(this.getUid(), balance);
-					} 					
-					//We are moving money *from* this account					
-					else if (transaction.getFrom().equals(this)){
-						balance -= transaction.getAmount();						
-						transaction.setBalance(this.getUid(), balance);					
-					}					
-					//We are moving money *to* this account					
-					for (TransactionSplit split : transaction.getToSplits()) {
-						if(split.getSource().equals(this))							
-							balance += split.getAmount();					
-					}					
-					//We are moving money *from* this account					
-					for (TransactionSplit split : transaction.getFromSplits()) {
-						if(split.getSource().equals(this))							
-							balance -= split.getAmount();					
-					}				
-				}			
-			}			
-			catch (InvalidValueException ive){				
-				Logger.getLogger(AccountImpl.class.getName()).log(Level.WARNING, "Incorrect value", ive);			
-			}		
-		}
-		setBalance(balance);	
-		
-		
-*/
 	}
 	
 	
-	
-/////////////////////////////////////////////////////////////////////
-	
-	
 	public void updateTheBalance(List<Transaction> transactions) {
-	
 		
 		long balance = this.getStartingBalance();
-		
-		
 
 		for (Transaction transaction : transactions) {			
-			try {
-				
-				
-				
-				
-				
-				if (!transaction.isDeleted()){
-				
-					
-					
-					
-					
-					
-					
-					//We are moving money *to* this account					
-					if (transaction.getTo().equals(this)){
-						balance += transaction.getAmount();						
-						transaction.setBalance(this.getUid(), balance);
-					} 					
-					//We are moving money *from* this account					
-					else if (transaction.getFrom().equals(this)){
-						balance -= transaction.getAmount();						
-						transaction.setBalance(this.getUid(), balance);					
-					}					
-					//We are moving money *to* this account					
-					for (TransactionSplit split : transaction.getToSplits()) {
-						if(split.getSource().equals(this))							
-							balance += split.getAmount();					
-					}					
-					//We are moving money *from* this account					
-					for (TransactionSplit split : transaction.getFromSplits()) {
-						if(split.getSource().equals(this))							
-							balance -= split.getAmount();					
-					}				
-				}			
-			}			
-			catch (InvalidValueException ive){				
-				Logger.getLogger(AccountImpl.class.getName()).log(Level.WARNING, "Incorrect value", ive);			
-			}		
+			
+			balance = transaction.updateBalance(balance, this);
+			
 		}
 		setBalance(balance);
 	}
 	
 	
-	
-	
-////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
-	
-	
-	
-
 	public String getFullName() {
 		return this.getName() + " (" + getAccountType().getName() + ")";
 	}
