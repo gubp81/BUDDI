@@ -127,7 +127,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		if (getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).equals(
 				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))
 				|| getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).before(
-						getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
+						getBudgetPeriodType().getStartOfBudgetPeriod(endDate)))
+		{
 //			Logger.getLogger().info("Start Date and End Date are in different budget periods.");
 			long amountStartPeriod = getAmount(startDate);
 //			Logger.getLogger().info("Amount Start Period = " + amountStartPeriod);
@@ -274,7 +275,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 	 */
 	private Date getPeriodDate(String periodKey){
 		String[] splitKey = periodKey.split(":");
-		if (splitKey.length == 4){
+		if (splitKey.length == 4)
+		{
 			int year = Integer.parseInt(splitKey[1]);
 			int month = Integer.parseInt(splitKey[2]);
 			int day = Integer.parseInt(splitKey[3]);
@@ -325,7 +327,8 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		return budgetedDates;
 	}
 	
-	BudgetCategory clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException {
+	BudgetCategory clone(Map<ModelObject, ModelObject> originalToCloneMap) throws CloneNotSupportedException 
+	{
 
 		if (originalToCloneMap.get(this) != null)
 			return (BudgetCategory) originalToCloneMap.get(this);

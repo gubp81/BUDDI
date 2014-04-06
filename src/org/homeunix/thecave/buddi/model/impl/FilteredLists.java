@@ -171,7 +171,7 @@ public class FilteredLists {
 	public static List<Transaction> getTransactionsBySearch(Document model, Source associatedSource, List<Transaction> transactions) {
 		String key = model.getUid() + transactions.hashCode() + (associatedSource == null ? associatedSource : associatedSource.getUid());
 		if (transactionsBySearchMap.get(key) == null){
-			transactionsBySearchMap.put(key, new TransactionListFilteredBySearch(model, associatedSource, transactions));
+			transactionsBySearchMap.put(key, (List<Transaction>) new TransactionListFilteredBySearch(model, associatedSource, transactions));
 		}
 		
 		return transactionsBySearchMap.get(key);
@@ -185,7 +185,7 @@ public class FilteredLists {
 		private final Source associatedSource;
 
 		private TransactionListFilteredBySearch(Document model, Source associatedSource, List<Transaction> transactions){
-			super(model, transactions);
+			super();
 			this.model = model;
 			this.associatedSource = associatedSource;
 		}
@@ -225,7 +225,6 @@ public class FilteredLists {
 //			return searchText;
 //		}
 		
-		@Override
 		public boolean isIncluded(Transaction t) {
 			if (t == null || t.getTo() == null | t.getFrom() == null){
 				return false;		
@@ -344,12 +343,56 @@ public class FilteredLists {
 				return transactionFilterThisYear(t, today);				
 			}
 			else if (TransactionDateFilterKeys.TRANSACTION_FILTER_LAST_YEAR == dateFilter) {
-				return transactionFilterLastYear(t, today);
+				return new TransactionFilterLastYearImpl().transactionFilterLastYear(t, today);
 			}
 			else {
 				Logger.getLogger(this.getClass().getName()).warning("Unknown filter pulldown: " + dateFilter);
 				return false;
 			}
+			
+		}
+		/* protected boolean transactionFilterLastYear(Transaction t, Date today) {
+			return DateUtil.isSameYear(DateUtil.addYears(today, -1), t.getDate());
+		} */
+
+		/*protected boolean transactionFilterThisYear(Transaction t, Date today) {
+			return DateUtil.isSameYear(today, t.getDate());
+		}*/
+
+		protected boolean transactionFilterLastQuarter(Transaction t, Date today) {
+			return DateUtil.isSameDay(DateUtil.getStartOfQuarter(DateUtil.addQuarters(today, -1)), DateUtil.getStartOfQuarter(t.getDate()));
+		}
+
+		protected boolean transactionFilterThisQuarter(Transaction t, Date today) {
+			return DateUtil.getStartOfDay(DateUtil.getStartOfQuarter(today)).before(t.getDate());
+		}
+
+		protected boolean transactionFilterLastMonth(Transaction t, Date today) {
+			return DateUtil.isSameMonth(DateUtil.addMonths(today, -1), t.getDate());
+		}
+
+		protected boolean transactionFilterThisMonth(Transaction t, Date today) {
+			return DateUtil.isSameMonth(today, t.getDate());
+		}
+
+		protected boolean transactionFilterLastSemiMonth(Transaction t, BudgetCategoryType semiMonth) {
+			return semiMonth.getStartOfBudgetPeriod(semiMonth.getBudgetPeriodOffset(new Date(), -1)).equals(semiMonth.getStartOfBudgetPeriod(t.getDate()));
+		}
+
+		protected boolean transactionFilterThisSemiMonth(Transaction t, BudgetCategoryType semiMonth) {
+			return semiMonth.getStartOfBudgetPeriod(new Date()).equals(semiMonth.getStartOfBudgetPeriod(t.getDate()));
+		}
+
+		protected boolean transactionFilterThisWeek(Transaction t, Date today) {
+			return DateUtil.isSameWeek(today, t.getDate());
+		}
+
+		protected boolean transactionFilterYesterday(Transaction t, Date today) {
+			return DateUtil.isSameDay(DateUtil.addDays(today, -1), t.getDate());
+		}
+
+		protected boolean transactionFilterToday(Transaction t, Date today) {
+			return DateUtil.isSameDay(today, t.getDate());
 		}
 		private boolean acceptText(Transaction t) {
 			if (searchText == null || searchText.length() == 0) {
