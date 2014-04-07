@@ -220,7 +220,8 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 			this.reconciledTo = reconciled;
 		}
 	}
-	private boolean setReconcil() {
+	private boolean setReconcil()
+	{
 		return this.getTo() != null
 				&& this.getFrom() != null
 				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
