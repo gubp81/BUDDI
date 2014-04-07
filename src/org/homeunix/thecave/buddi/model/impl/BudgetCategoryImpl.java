@@ -107,17 +107,18 @@ public class BudgetCategoryImpl extends SourceImpl implements BudgetCategory {
 		
 		Logger.getLogger(this.getClass().getName()).info("Starting to calculate the budgeted amount for " + getFullName() + " between " + startDate + " and " + endDate + ".");
 		
+                final Date startDateOfBudgetPeriod = getBudgetPeriodType().getStartOfBudgetPeriod(startDate);
+                final Date endDateOfBudgetPeriod = getBudgetPeriodType().getStartOfBudgetPeriod(endDate);
+                final Date startBudgetPeriodOffset = getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1);
+                
 		//If Start and End are in the same budget period
-		if (getBudgetPeriodType().getStartOfBudgetPeriod(startDate).equals(
-				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
+		if (startDateOfBudgetPeriod.equals(endDateOfBudgetPeriod)){
                     return sameStartEndBudgetPeriod(startDate, endDate);
 		}
 		 
 		//If the area between Start and End overlap at least two budget periods. 
-		if (getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).equals(
-				getBudgetPeriodType().getStartOfBudgetPeriod(endDate))
-				|| getBudgetPeriodType().getBudgetPeriodOffset(startDate, 1).before(
-						getBudgetPeriodType().getStartOfBudgetPeriod(endDate))){
+		if (startBudgetPeriodOffset.equals(endDateOfBudgetPeriod)
+				|| startBudgetPeriodOffset.before(endDateOfBudgetPeriod)){
                     return overlapStartEndBudgetPeriod(startDate, endDate);
 		}
 
