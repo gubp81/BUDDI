@@ -152,16 +152,9 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		//If one of the To / From source is either
 		// a budget category or a Prepaid account,
 		// we set both of the flags to the same value.
-		if (this.getTo() != null
-				&& this.getFrom() != null
-				&& !(this.getFrom() instanceof Split)
-				&& !(this.getTo() instanceof Split)
+		if (setCleared()
 				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory) 
-				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)
-				&& (this.getTo() instanceof BudgetCategory
-						|| this.getFrom() instanceof BudgetCategory
-						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
-						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)){
 			this.clearedTo = cleared;
 		}
 	}
@@ -172,16 +165,22 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		//If one of the To / From source is either
 		// a budget category or a Prepaid account,
 		// we set both of the flags to the same value.
-		if (this.getTo() != null
+		if (setCleared()){
+			this.clearedFrom = cleared;
+		}
+	}
+	/**
+	 * @return
+	 */
+	private boolean setCleared() {
+		return this.getTo() != null
 				&& this.getFrom() != null
 				&& !(this.getFrom() instanceof Split)
 				&& !(this.getTo() instanceof Split)
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
-						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
-			this.clearedFrom = cleared;
-		}
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)));
 	}
 	public void setDate(Date date) {
 		if (this.date != null && this.date.equals(date))
@@ -217,16 +216,22 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		//If one of the To / From source is either
 		// a budget category or a Prepaid account,
 		// we set both of the flags to the same value.
-		if (this.getTo() != null
+		if (setReconcil()){
+			this.reconciledTo = reconciled;
+		}
+	}
+	/**
+	 * @return
+	 */
+	private boolean setReconcil() {
+		return this.getTo() != null
 				&& this.getFrom() != null
 				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
 				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)				
 				&& (this.getTo() instanceof BudgetCategory
 						|| this.getFrom() instanceof BudgetCategory
 						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
-						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
-			this.reconciledTo = reconciled;
-		}
+						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)));
 	}
 	public void setReconciledTo(boolean reconciled) {
 		if (this.reconciledTo != reconciled)
@@ -235,14 +240,7 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 		//If one of the To / From source is either
 		// a budget category or a Prepaid account,
 		// we set both of the flags to the same value.
-		if (this.getTo() != null
-				&& this.getFrom() != null
-				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
-				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)
-				&& (this.getTo() instanceof BudgetCategory
-						|| this.getFrom() instanceof BudgetCategory
-						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
-						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)))){
+		if (setReconcil()){
 			this.reconciledFrom = reconciled;
 		}
 	}
