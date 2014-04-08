@@ -353,27 +353,45 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
  			if (!isDeleted()){
  				
  				//We are moving money *to* this account					
- 				if (getTo().equals(account)){
- 					balance += getAmount();						
- 					setBalance(account.getUid(), balance);
- 				} 					
+ 				balance = updateDestinationAccountBalance(balance, account); 			
  				//We are moving money *from* this account					
- 				else if (getFrom().equals(account)){
- 					balance -= getAmount();						
- 					setBalance(account.getUid(), balance);					
- 				}					
+ 				balance = updateSourceAccountBalance(balance, account);						
  				//We are moving money *to* this account					
- 				for (TransactionSplit split : getToSplits()) {
- 					if(split.getSource().equals(account))							
- 						balance += split.getAmount();					
- 				}					
+ 				balance = updateBalanceFromDestinationAccount(balance, account);					
  				//We are moving money *from* this account					
- 				for (TransactionSplit split : getFromSplits()) {
- 					if(split.getSource().equals(account))							
- 						balance -= split.getAmount();					
- 				}				
+ 				balance = updateBalanceFromSourceAccount(balance, account);				
  			}			
  		
  		return balance;
  	}
+        private long updateDestinationAccountBalance(long balance, Account account) {
+  		if (getTo().equals(account)){
+  			balance += getAmount();						
+  			setBalance(account.getUid(), balance);
+  		}
+  		return balance;
+  	}
+        
+        private long updateSourceAccountBalance(long balance, Account account) {
+		if (getFrom().equals(account)){
+			balance -= getAmount();						
+			setBalance(account.getUid(), balance);					
+		}
+		return balance;
+	}
+ 	private long updateBalanceFromDestinationAccount(long balance,
+  			Account account) {
+  		for (TransactionSplit split : getToSplits()) {
+  			if(split.getSource().equals(account))							
+  				balance += split.getAmount();					
+  		}
+  		return balance;
+  	}
+        private long updateBalanceFromSourceAccount(long balance, Account account) {
+  		for (TransactionSplit split : getFromSplits()) {
+  			if(split.getSource().equals(account))							
+  				balance -= split.getAmount();					
+  		}
+  		return balance;
+  	}
 }
