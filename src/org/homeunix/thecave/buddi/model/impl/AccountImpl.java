@@ -90,9 +90,14 @@ public class AccountImpl extends SourceImpl implements Account {
 
 		List<Transaction> transactions = getDocument().getTransactions(this);
 
+		updateTheBalance(transactions);	
+	}
+public void updateTheBalance(List<Transaction> transactions) {
+
+		long balance = this.getStartingBalance();
 		for (Transaction transaction : transactions) {			
 			try {
-				if (!transaction.isDeleted()){					
+				if (!transaction.isDeleted()){
 					//We are moving money *to* this account					
 					if (transaction.getTo().equals(this)){
 						balance += transaction.getAmount();						
@@ -119,9 +124,8 @@ public class AccountImpl extends SourceImpl implements Account {
 				Logger.getLogger(AccountImpl.class.getName()).log(Level.WARNING, "Incorrect value", ive);			
 			}		
 		}
-		setBalance(balance);	
+		setBalance(balance);
 	}
-
 	public String getFullName() {
 		return this.getName() + " (" + getAccountType().getName() + ")";
 	}
