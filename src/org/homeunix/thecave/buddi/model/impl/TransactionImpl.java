@@ -346,4 +346,50 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	public String toString() {
 		return getDescription() + " " + getAmount() + " (" + getFrom() + " -> " + getTo() + ")";
 	}
+        public long updateBalance(long balance, Account account) {
+ 		
+ 			if (!isDeleted()){
+ 				
+ 				//We are moving money *to* this account					
+ 				balance = updateDestinationAccountBalance(balance, account); 			
+ 				//We are moving money *from* this account					
+ 				balance = updateSourceAccountBalance(balance, account);						
+ 				//We are moving money *to* this account					
+ 				balance = updateBalanceFromDestinationAccount(balance, account);					
+ 				//We are moving money *from* this account					
+ 				balance = updateBalanceFromSourceAccount(balance, account);				
+ 			}			
+ 		
+ 		return balance;
+ 	}
+        private long updateDestinationAccountBalance(long balance, Account account) {
+  		if (getTo().equals(account)){
+  			balance += getAmount();						
+  			setBalance(account.getUid(), balance);
+  		}
+  		return balance;
+  	}
+        
+        private long updateSourceAccountBalance(long balance, Account account) {
+		if (getFrom().equals(account)){
+			balance -= getAmount();						
+			setBalance(account.getUid(), balance);					
+		}
+		return balance;
+	}
+ 	private long updateBalanceFromDestinationAccount(long balance,
+  			Account account) {
+  		for (TransactionSplit split : getToSplits()) {
+  			if(split.getSource().equals(account))							
+  				balance += split.getAmount();					
+  		}
+  		return balance;
+  	}
+        private long updateBalanceFromSourceAccount(long balance, Account account) {
+  		for (TransactionSplit split : getFromSplits()) {
+  			if(split.getSource().equals(account))							
+  				balance -= split.getAmount();					
+  		}
+  		return balance;
+  	}
 }

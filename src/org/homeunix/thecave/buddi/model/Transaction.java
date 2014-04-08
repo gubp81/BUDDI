@@ -75,4 +75,6 @@ public interface Transaction extends ModelObject {
 	public void setTo(Source to) throws InvalidValueException;
 	
 	public void setDeleted(boolean deleted) throws InvalidValueException;
+        
+        public long updateBalance(long balance, Account account);
 }
