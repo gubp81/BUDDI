@@ -224,15 +224,20 @@ public class TransactionImpl extends ModelObjectImpl implements Transaction {
 	 * @return
 	 */
 	private boolean setReconcil() {
-		return this.getTo() != null
+             boolean sourceIsAccount = this.getFrom() instanceof Account;
+             boolean sourceIsBudgetCategory = this.getFrom() instanceof BudgetCategory;
+             boolean targetIsAccount = this.getTo() instanceof Account;
+             boolean targetIsBudgetCategory = this.getTo() instanceof BudgetCategory;
+             boolean isFromPrepaidAccount = ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT));
+             boolean isToPrepaidAccount = ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT));
+	     
+             return this.getTo() != null
 				&& this.getFrom() != null
-				&& (this.getFrom() instanceof Account || this.getFrom() instanceof BudgetCategory)
-				&& (this.getTo() instanceof Account || this.getTo() instanceof BudgetCategory)				
-				&& (this.getTo() instanceof BudgetCategory
-						|| this.getFrom() instanceof BudgetCategory
-						|| ((Account) this.getTo()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT))
-						|| ((Account) this.getFrom()).getAccountType().getName().equals(TextFormatter.getTranslation(BuddiKeys.PREPAID_ACCOUNT)));
-	}
+				&& (sourceIsAccount || sourceIsBudgetCategory) && (targetIsAccount || targetIsBudgetCategory)				
+				&& (sourceIsBudgetCategory || targetIsBudgetCategory ||   isFromPrepaidAccount || isToPrepaidAccount);
+	
+        }
+        
 	public void setReconciledTo(boolean reconciled) {
 		if (this.reconciledTo != reconciled)
 			setChanged();

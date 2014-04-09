@@ -86,7 +86,6 @@ public class AccountImpl extends SourceImpl implements Account {
 	public void updateBalance(){		
 		if (getDocument() == null)			
 			return;
-		long balance = this.getStartingBalance();
 
 		List<Transaction> transactions = getDocument().getTransactions(this);
 
